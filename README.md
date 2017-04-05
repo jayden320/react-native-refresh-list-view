@@ -5,6 +5,18 @@
 
 控件代码一共100多行
 
+## 运行Demo
+
+### 第一步
+```
+npm npm install
+```
+
+### 第二步
+```
+react-native run-ios
+```
+
 ## 使用
 
 ```` javascript
