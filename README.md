@@ -1,9 +1,7 @@
 # react-native-refresh-list-view
-一个简单实现的列表下拉、上拉刷新控件
+初学react native，看到github上现有的相关控件实现都较为复杂，又不太符合自己心中想要的样子。于是自己花了一个小时做了一个简单的列表下拉、上拉刷新控件。
 
-初学react native，做了一个简单的列表下拉、上拉刷新控件
-
-控件代码一共100多行
+控件的实现非常简单，代码一共100多行，方便各位根据自己的需求随意修改。如果有bug或建议，欢迎提issue。
 
 ## 运行Demo
 
@@ -51,4 +49,4 @@ this.refs.listView.endRefreshing(RefreshState.NoMoreData)
 
 ## 最后
 
-如果喜欢，请顺手我一个star吧~  ：）
+如果喜欢，请顺手我一个star，非常感谢~  ：）
