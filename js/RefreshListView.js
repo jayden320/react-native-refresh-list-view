@@ -19,9 +19,9 @@ export const RefreshState = {
 
 // create a component
 class RefreshListView extends Component {
-    propTypes: {
-        onHeaderRefresh: func,
-        onFooterRefresh: func,
+    static propTypes = {
+        onHeaderRefresh: React.PropTypes.func,
+        onFooterRefresh: React.PropTypes.func,
     }
 
     static defaultProps = {
