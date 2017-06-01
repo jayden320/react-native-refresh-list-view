@@ -2,13 +2,12 @@
 //  Created by Liu Jinyong on 17/4/5.
 //  Copyright © 2016年 Liu Jinyong. All rights reserved.
 //
+//  @flow
 //  Github:
 //  https://github.com/huanxsd/react-native-refresh-list-view
 
-//import liraries
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, RefreshControl, ListView, ActivityIndicator, TouchableOpacity } from 'react-native';
-
+import React, { PureComponent } from 'react';
+import { View, Text, StyleSheet, RefreshControl, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native';
 
 export const RefreshState = {
     Idle: 'Idle',
@@ -17,11 +16,21 @@ export const RefreshState = {
     Failure: 'Failure'
 }
 
-// create a component
-class RefreshListView extends Component {
-    static propTypes = {
-        onHeaderRefresh: React.PropTypes.func,
-        onFooterRefresh: React.PropTypes.func,
+let debug = false
+
+class RefreshListView extends PureComponent {
+
+    props: {
+        onHeaderRefresh: () => void,
+        onFooterRefresh: () => void,
+        footerRefreshingText?: string,
+        footerFailureText?: string,
+        footerNoMoreDataText?: string,
+    }
+
+    state: {
+        headerState: RefreshState,
+        footerState: RefreshState,
     }
 
     static defaultProps = {
@@ -40,6 +49,8 @@ class RefreshListView extends Component {
     }
 
     startHeaderRefreshing() {
+        debug && console.log('startHeaderRefreshing')
+
         this.setState({ headerState: RefreshState.Refreshing })
 
         if (this.props.onHeaderRefresh) {
@@ -48,6 +59,8 @@ class RefreshListView extends Component {
     }
 
     startFooterRefreshing() {
+        debug && console.log('startFooterRefreshing')
+
         this.setState({ footerState: RefreshState.Refreshing })
 
         if (this.props.onFooterRefresh) {
@@ -56,6 +69,8 @@ class RefreshListView extends Component {
     }
 
     shouldStartHeaderRefreshing() {
+        debug && console.log('shouldStartHeaderRefreshing')
+
         if (this.state.headerState == RefreshState.Refreshing ||
             this.state.footerState == RefreshState.Refreshing) {
             return false
@@ -65,6 +80,8 @@ class RefreshListView extends Component {
     }
 
     shouldStartFooterRefreshing() {
+        debug && console.log('shouldStartFooterRefreshing')
+
         if (this.state.headerState == RefreshState.Refreshing ||
             this.state.footerState == RefreshState.Refreshing) {
             return false
@@ -73,7 +90,7 @@ class RefreshListView extends Component {
             this.state.footerState == RefreshState.NoMoreData) {
             return false
         }
-        if (this.props.dataSource.getRowCount() == 0) {
+        if (this.props.data.length == 0) {
             return false
         }
 
@@ -81,11 +98,13 @@ class RefreshListView extends Component {
     }
 
     endRefreshing(refreshState: RefreshState) {
+        debug && console.log('endRefreshing')
+
         if (refreshState == RefreshState.Refreshing) {
             return
         }
         let footerState = refreshState
-        if (this.props.dataSource.getRowCount() == 0) {
+        if (this.props.data.length == 0) {
             footerState = RefreshState.Idle
         }
 
@@ -109,7 +128,9 @@ class RefreshListView extends Component {
         }
     }
 
-    onFooterRefresh() {
+    onEndReached(info) {
+        debug && console.log('onEndReached   ' + info.distanceFromEnd)
+
         if (this.shouldStartFooterRefreshing()) {
             this.startFooterRefreshing();
         }
@@ -117,33 +138,32 @@ class RefreshListView extends Component {
 
     render() {
         return (
-            <ListView
+            <FlatList
                 {...this.props}
-                enableEmptySections
-                refreshControl={
-                    <RefreshControl
-                        refreshing={this.state.headerState == RefreshState.Refreshing}
-                        onRefresh={() => this.onHeaderRefresh()}
-                        tintColor='gray'
-                    />
-                }
-                renderFooter={() => this.renderFooter()}
-                onEndReachedThreshold={10}
-                onEndReached={() => this.onFooterRefresh()}
+                onEndReachedThreshold={0.3}
+                onEndReached={(info) => this.onEndReached(info)}
+                onRefresh={() => this.onHeaderRefresh()}
+                refreshing={this.state.headerState == RefreshState.Refreshing}
+                ListFooterComponent={() => this.renderFooter()}
             />
+
         );
     }
-
 
     renderFooter() {
         let footer = null;
 
         switch (this.state.footerState) {
             case RefreshState.Idle:
+                <TouchableOpacity
+                    style={styles.footerContainer}
+                >
+                </TouchableOpacity>
                 break;
             case RefreshState.Failure: {
                 footer =
-                    <TouchableOpacity style={styles.footerContainer}
+                    <TouchableOpacity
+                        style={styles.footerContainer}
                         onPress={() => this.startFooterRefreshing()}
                     >
                         <Text style={styles.footerText}>
@@ -156,7 +176,7 @@ class RefreshListView extends Component {
                 footer =
                     <View style={styles.footerContainer} >
                         <ActivityIndicator size="small" color="#888888" />
-                        <Text style={styles.footerText}>
+                        <Text style={[styles.footerText, { marginLeft: 7 }]}>
                             {this.props.footerRefreshingText}
                         </Text>
                     </View>
@@ -185,7 +205,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10
+        padding: 10,
+        height: 44,
     },
     footerText: {
         fontSize: 14,
