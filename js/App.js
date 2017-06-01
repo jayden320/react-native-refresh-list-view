@@ -32,7 +32,7 @@ class App extends Component {
     }
 
     //isReload 如果是下拉刷新，则isReload为true。如果是上拉翻页，则isReload为false
-    requestListWithReload(isReload: boolean) {
+    requestList(isReload: boolean) {
         let page = isReload ? 0 : this.state.page + 1
 
         setTimeout(() => {
@@ -83,8 +83,8 @@ class App extends Component {
                     data={this.state.dataList}
                     keyExtractor={this.keyExtractor}
                     renderItem={this.renderCell}
-                    onHeaderRefresh={() => this.requestListWithReload(true)}
-                    onFooterRefresh={() => this.requestListWithReload(false)}
+                    onHeaderRefresh={() => this.requestList(true)}
+                    onFooterRefresh={() => this.requestList(false)}
                 />
             </View>
         );
