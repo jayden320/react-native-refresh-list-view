@@ -28,22 +28,18 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.refs.listView.startHeaderRefreshing()
-        // this.setState({ refreshing: true })
-        // this.requestListWithReload(true)
+        this.listView.startHeaderRefreshing()
     }
 
     //isReload 如果是下拉刷新，则isReload为true。如果是上拉翻页，则isReload为false
     requestListWithReload(isReload: boolean) {
-        // this.setState({ refreshing: true })
-
         let page = isReload ? 0 : this.state.page + 1
 
         setTimeout(() => {
             // 测试网络加载失败的情况
             if (Math.random() < 0.3) {
 
-                this.refs.listView.endRefreshing(RefreshState.Failure)
+                this.listView.endRefreshing(RefreshState.Failure)
                 alert('加载失败')
                 return;
             }
@@ -66,7 +62,7 @@ class App extends Component {
                 footerState = RefreshState.NoMoreData
             }
 
-            this.refs.listView.endRefreshing(footerState)
+            this.listView.endRefreshing(footerState)
         }, 1000);
     }
 
@@ -82,31 +78,14 @@ class App extends Component {
         console.log('App render')
         return (
             <View style={styles.container}>
-                {
-                    <RefreshListView
-                        ref='listView'
-                        data={this.state.dataList}
-                        keyExtractor={this.keyExtractor}
-                        renderItem={this.renderCell}
-                        onHeaderRefresh={() => this.requestListWithReload(true)}
-                        onFooterRefresh={() => this.requestListWithReload(false)}
-
-                        // data={this.state.dataList}
-                        // onRefresh={() => this.requestListWithReload(true)}
-                        // refreshing={this.state.refreshing}
-                        // ListFooterComponent={ListFooter}
-                    />
-                }
-                {
-                    // <FlatList
-                    // data={this.state.dataList}
-                    // keyExtractor={this.keyExtractor}
-                    // onRefresh={() => this.requestListWithReload(true)}
-                    // refreshing={this.state.refreshing}
-                    // renderItem={this.renderCell}
-                    // ListFooterComponent={ListFooter}
-                    // />
-                }
+                <RefreshListView
+                    ref={(e) => this.listView = e}
+                    data={this.state.dataList}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={this.renderCell}
+                    onHeaderRefresh={() => this.requestListWithReload(true)}
+                    onFooterRefresh={() => this.requestListWithReload(false)}
+                />
             </View>
         );
     }
