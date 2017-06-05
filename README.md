@@ -1,4 +1,8 @@
 # react-native-refresh-list-view
+
+Deprecated:后期在这个库中更新
+https://github.com/huanxsd/react-native-jykit
+
 初学react native，看到github上现有的相关控件实现都较为复杂，又不太符合自己心中想要的样子。于是自己花了一个小时做了一个简单的列表下拉、上拉刷新控件。列表使用的是FlatList。
 
 控件的实现非常简单，代码一共100多行，方便各位根据自己的需求随意修改。如果有bug或建议，欢迎提issue。
