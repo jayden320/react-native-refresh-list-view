@@ -7,12 +7,12 @@
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 
-import App from './js/App'
+import Demo from './src/Demo'
 
 export default class RefreshListView extends Component {
     render() {
         return (
-            <App />
+            <Demo />
         );
     }
 }

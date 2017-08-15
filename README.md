@@ -1,9 +1,6 @@
 # react-native-refresh-list-view
 
-Deprecated:后期在这个库中更新
-https://github.com/huanxsd/react-native-jykit
-
-初学react native，看到github上现有的相关控件实现都较为复杂，又不太符合自己心中想要的样子。于是自己花了一个小时做了一个简单的列表下拉、上拉刷新控件。列表使用的是FlatList。
+初学react native，看到github上现有的相关控件实现都较为复杂，又不太符合自己心中想要的样子。于是自己做了一个简单的列表下拉、上拉刷新控件。列表使用的是FlatList。
 
 控件的实现非常简单，代码一共100多行，方便各位根据自己的需求随意修改。如果有bug或建议，欢迎提issue。
 
@@ -22,27 +19,31 @@ react-native run-ios
 ## 使用
 
 ```` javascript
-// render
+// code in render
 <RefreshListView
-    ref={(e) => this.listView = e}
     data={this.state.dataList}
     keyExtractor={this.keyExtractor}
     renderItem={this.renderCell}
-    onHeaderRefresh={() => this.requestList(true)}
-    onFooterRefresh={() => this.requestList(false)}
+
+    refreshState={this.state.refreshState}
+    onHeaderRefresh={this.onHeaderRefresh}
+    onFooterRefresh={this.onFooterRefresh}
 />
 
-// 开始下拉刷新
-this.listView.startHeaderRefreshing()
+// 下拉刷新
+this.setState({refreshState: RefreshState.HeaderRefreshing})
+
+// 上拉翻页
+this.setState({refreshState: RefreshState.FooterRefreshing})
 
 // 加载成功
-this.listView.endRefreshing(RefreshState.Idle)
+this.setState({refreshState: RefreshState.Idle})
 
 // 加载失败
-this.listView.endRefreshing(RefreshState.Failure)
+this.setState({refreshState: RefreshState.Failure})
 
 // 加载全部数据
-this.listView.endRefreshing(RefreshState.NoMoreData)
+this.setState({refreshState: RefreshState.NoMoreData})
 
 ````
 
@@ -51,6 +52,14 @@ this.listView.endRefreshing(RefreshState.NoMoreData)
 <img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/1.png" alt="1" title="1">
 <img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/2.png" alt="2" title="2">
 <img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/3.png" alt="3" title="3">
+
+## 常见问题
+列表滑动过程中，可能会出现警告
+Task orphaned for request <NSMutableURLRequest: [[SOME_HEX_CODE]]> { URL: [[IMG_URL]] }
+
+具体错误见[官方issue](https://github.com/facebook/react-native/issues/12152)。
+解决方案：使用图片缓存库[react-native-cached-image](https://github.com/kfiroo/react-native-cached-image)
+
 
 ## 最后
 
