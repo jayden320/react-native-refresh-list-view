@@ -8,7 +8,7 @@
 
 ### 第一步
 ```
-npm npm install
+npm install
 ```
 
 ### 第二步

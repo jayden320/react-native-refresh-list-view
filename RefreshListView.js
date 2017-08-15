@@ -7,7 +7,7 @@
 //  https://github.com/huanxsd/react-native-refresh-list-view
 
 import React, {PureComponent} from 'react'
-import {View, Text, StyleSheet, RefreshControl, FlatList, ActivityIndicator, TouchableOpacity} from 'react-native'
+import {View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity} from 'react-native'
 
 export const RefreshState = {
     Idle: 0,
@@ -27,16 +27,22 @@ class RefreshListView extends PureComponent {
 
     props: {
         refreshState: number,
-
         onHeaderRefresh: (refreshState: number) => void,
         onFooterRefresh: (refreshState: number) => void,
-
         data: Array<any>,
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('RefreshListView componentWillReceiveProps ' + JSON.stringify(nextProps))
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log('RefreshListView componentDidUpdate ' + JSON.stringify(prevProps) + '     state: ' + JSON.stringify(prevState))
     }
 
     onHeaderRefresh() {
         debug && console.log('onHeaderRefresh')
-        
+
         if (this.shouldStartHeaderRefreshing()) {
             this.props.onHeaderRefresh(RefreshState.HeaderRefreshing)
         }
@@ -90,6 +96,7 @@ class RefreshListView extends PureComponent {
 
         switch (this.props.refreshState) {
             case RefreshState.Idle:
+                footer = (<View style={styles.footerContainer} />)
                 break
             case RefreshState.Failure: {
                 footer = (

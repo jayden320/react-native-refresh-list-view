@@ -7,7 +7,7 @@
 //  https://github.com/huanxsd/react-native-refresh-list-view
 
 import React, {Component} from 'react'
-import {View, StyleSheet, Text} from 'react-native'
+import {View, StyleSheet, Text, Platform} from 'react-native'
 import Cell from './Cell'
 import RefreshListView, {RefreshState} from './RefreshListView'
 import testData from './data'
@@ -125,7 +125,7 @@ class Demo extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 20,
+        marginTop: Platform.OS == 'ios' ? 20 : 0,
     },
     title: {
         fontSize: 18,
