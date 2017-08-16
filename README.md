@@ -4,9 +4,27 @@
 
 控件的实现非常简单，代码一共100多行，方便各位根据自己的需求随意修改。如果有bug或建议，欢迎提issue。
 
+## 截图
+
+<img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/1.png" alt="1" title="1">
+<img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/2.png" alt="2" title="2">
+<img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/3.png" alt="3" title="3">
+
+## 安装
+
+### NPM
+```
+npm install --save react-native-refresh-list-view
+```
+
+### 手动安装
+下载源码，将RefreshListView.js拖入工程中
+
+
 ## 运行Demo
 
 ### 第一步
+进入Example目录，执行：
 ```
 npm install
 ```
@@ -16,19 +34,22 @@ npm install
 react-native run-ios
 ```
 
-## 使用
+## 接口
 
 ```` javascript
-// code in render
-<RefreshListView
-    data={this.state.dataList}
-    keyExtractor={this.keyExtractor}
-    renderItem={this.renderCell}
+render() {
+    return (
+        <RefreshListView
+            data={this.state.dataList}
+            keyExtractor={this.keyExtractor}
+            renderItem={this.renderCell}
 
-    refreshState={this.state.refreshState}
-    onHeaderRefresh={this.onHeaderRefresh}
-    onFooterRefresh={this.onFooterRefresh}
-/>
+            refreshState={this.state.refreshState}
+            onHeaderRefresh={this.onHeaderRefresh}
+            onFooterRefresh={this.onFooterRefresh}
+        />
+    )
+}
 
 // 下拉刷新
 this.setState({refreshState: RefreshState.HeaderRefreshing})
@@ -44,14 +65,7 @@ this.setState({refreshState: RefreshState.Failure})
 
 // 加载全部数据
 this.setState({refreshState: RefreshState.NoMoreData})
-
-````
-
-## 截图
-
-<img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/1.png" alt="1" title="1">
-<img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/2.png" alt="2" title="2">
-<img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/3.png" alt="3" title="3">
+```
 
 ## 常见问题
 列表滑动过程中，可能会出现警告

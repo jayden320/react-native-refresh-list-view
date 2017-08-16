@@ -8,8 +8,8 @@
 
 import React, {Component} from 'react'
 import {View, StyleSheet, Text, Platform} from 'react-native'
+import RefreshListView, {RefreshState} from 'react-native-refresh-list-view'
 import Cell from './Cell'
-import RefreshListView, {RefreshState} from './RefreshListView'
 import testData from './data'
 
 class Demo extends Component {
