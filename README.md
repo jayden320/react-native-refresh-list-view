@@ -44,7 +44,7 @@ react-native run-ios
 
 ## 接口
 
-```` javascript
+``` javascript
 render() {
     return (
         <RefreshListView
