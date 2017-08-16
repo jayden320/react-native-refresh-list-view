@@ -23,20 +23,22 @@ const footerRefreshingText = '数据加载中…'
 const footerFailureText = '点击重新加载'
 const footerNoMoreDataText = '已加载全部数据'
 
+type Props = {
+    refreshState: number,
+    onHeaderRefresh: (refreshState: number) => void,
+    onFooterRefresh: (refreshState: number) => void,
+    data: Array<any>,
+}
+
 class RefreshListView extends PureComponent {
 
-    props: {
-        refreshState: number,
-        onHeaderRefresh: (refreshState: number) => void,
-        onFooterRefresh: (refreshState: number) => void,
-        data: Array<any>,
-    }
+    props: Props
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps: Props) {
         console.log('RefreshListView componentWillReceiveProps ' + JSON.stringify(nextProps))
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps: Props, prevState: any) {
         console.log('RefreshListView componentDidUpdate ' + JSON.stringify(prevProps) + '     state: ' + JSON.stringify(prevState))
     }
 
