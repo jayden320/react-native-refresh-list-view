@@ -6,15 +6,15 @@
 
 ## 截图
 
-下拉刷新
+### 下拉刷新
 
 <img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/1.png" alt="1" title="1">
 
-上拉翻页
+### 上拉翻页
 
 <img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/2.png" alt="2" title="2">
 
-已加载全部数据
+### 已加载全部数据
 
 <img src="https://github.com/huanxsd/react-native-refresh-list-view/blob/master/screen_shot/3.png" alt="3" title="3">
 
