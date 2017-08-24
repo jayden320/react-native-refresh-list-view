@@ -17,7 +17,8 @@ export const RefreshState = {
     Failure: 4,
 }
 
-const debug = false
+const DEBUG = false
+const log = (text: string) => {DEBUG && console.log(text)}
 
 const footerRefreshingText = '数据加载中…'
 const footerFailureText = '点击重新加载'
@@ -28,22 +29,27 @@ type Props = {
     onHeaderRefresh: (refreshState: number) => void,
     onFooterRefresh: (refreshState: number) => void,
     data: Array<any>,
+
+    footerContainerStyle?: any,
+    footerTextStyle?: any,
 }
 
-class RefreshListView extends PureComponent {
+type State = {}
 
+class RefreshListView extends PureComponent {
     props: Props
+    state: State
 
     componentWillReceiveProps(nextProps: Props) {
-        console.log('RefreshListView componentWillReceiveProps ' + JSON.stringify(nextProps))
+        log('RefreshListView componentWillReceiveProps ' + nextProps.refreshState)
     }
 
-    componentDidUpdate(prevProps: Props, prevState: any) {
-        console.log('RefreshListView componentDidUpdate ' + JSON.stringify(prevProps) + '     state: ' + JSON.stringify(prevState))
+    componentDidUpdate(prevProps: Props, prevState: State) {
+        log('RefreshListView componentDidUpdate ' + prevProps.refreshState)
     }
 
     onHeaderRefresh() {
-        debug && console.log('onHeaderRefresh')
+        log('onHeaderRefresh')
 
         if (this.shouldStartHeaderRefreshing()) {
             this.props.onHeaderRefresh(RefreshState.HeaderRefreshing)
@@ -51,7 +57,7 @@ class RefreshListView extends PureComponent {
     }
 
     onEndReached(info: any) {
-        debug && console.log('onEndReached   ' + info.distanceFromEnd)
+        log('onEndReached   ' + info.distanceFromEnd)
 
         if (this.shouldStartFooterRefreshing()) {
             this.props.onFooterRefresh(RefreshState.FooterRefreshing)
@@ -59,7 +65,7 @@ class RefreshListView extends PureComponent {
     }
 
     shouldStartHeaderRefreshing() {
-        debug && console.log('shouldStartHeaderRefreshing')
+        log('shouldStartHeaderRefreshing')
 
         if (this.props.refreshState == RefreshState.HeaderRefreshing ||
             this.props.refreshState == RefreshState.FooterRefreshing) {
@@ -70,7 +76,7 @@ class RefreshListView extends PureComponent {
     }
 
     shouldStartFooterRefreshing(): boolean {
-        debug && console.log('shouldStartFooterRefreshing')
+        log('shouldStartFooterRefreshing')
 
         let {refreshState, data} = this.props
         if (data.length == 0) {
@@ -96,36 +102,38 @@ class RefreshListView extends PureComponent {
     renderFooter() {
         let footer = null
 
+        let footerContainerStyle = [styles.footerContainer, this.props.footerContainerStyle]
+        let footerTextStyle = [styles.footerText, this.props.footerTextStyle]
         switch (this.props.refreshState) {
             case RefreshState.Idle:
-                footer = (<View style={styles.footerContainer} />)
+                footer = (<View style={footerContainerStyle} />)
                 break
             case RefreshState.Failure: {
                 footer = (
                     <TouchableOpacity
-                        style={styles.footerContainer}
+                        style={footerContainerStyle}
                         onPress={() => {
                             this.props.onFooterRefresh(RefreshState.FooterRefreshing)
                         }}
                     >
-                        <Text style={styles.footerText}>{footerFailureText}</Text>
+                        <Text style={footerTextStyle}>{footerFailureText}</Text>
                     </TouchableOpacity>
                 )
                 break
             }
             case RefreshState.FooterRefreshing: {
                 footer = (
-                    <View style={styles.footerContainer} >
+                    <View style={footerContainerStyle} >
                         <ActivityIndicator size="small" color="#888888" />
-                        <Text style={[styles.footerText, {marginLeft: 7}]}>{footerRefreshingText}</Text>
+                        <Text style={[footerTextStyle, {marginLeft: 7}]}>{footerRefreshingText}</Text>
                     </View>
                 )
                 break
             }
             case RefreshState.NoMoreData: {
                 footer = (
-                    <View style={styles.footerContainer} >
-                        <Text style={styles.footerText}>{footerNoMoreDataText}</Text>
+                    <View style={footerContainerStyle} >
+                        <Text style={footerTextStyle}>{footerNoMoreDataText}</Text>
                     </View>
                 )
                 break
@@ -134,7 +142,6 @@ class RefreshListView extends PureComponent {
 
         return footer
     }
-
 }
 
 const styles = StyleSheet.create({
