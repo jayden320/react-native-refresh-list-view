@@ -41,31 +41,33 @@ class RefreshListView extends PureComponent {
     state: State
 
     componentWillReceiveProps(nextProps: Props) {
-        log('RefreshListView componentWillReceiveProps ' + nextProps.refreshState)
+        log('[RefreshListView]  RefreshListView componentWillReceiveProps ' + nextProps.refreshState)
     }
 
     componentDidUpdate(prevProps: Props, prevState: State) {
-        log('RefreshListView componentDidUpdate ' + prevProps.refreshState)
+        log('[RefreshListView]  RefreshListView componentDidUpdate ' + prevProps.refreshState)
     }
 
-    onHeaderRefresh() {
-        log('onHeaderRefresh')
+    onHeaderRefresh = () => {
+        log('[RefreshListView]  onHeaderRefresh')
 
         if (this.shouldStartHeaderRefreshing()) {
+            log('[RefreshListView]  onHeaderRefresh')
             this.props.onHeaderRefresh(RefreshState.HeaderRefreshing)
         }
     }
 
-    onEndReached(info: any) {
-        log('onEndReached   ' + info.distanceFromEnd)
+    onEndReached = (info: any) => {
+        log('[RefreshListView]  onEndReached   ' + info.distanceFromEnd)
 
         if (this.shouldStartFooterRefreshing()) {
+            log('[RefreshListView]  onFooterRefresh')
             this.props.onFooterRefresh(RefreshState.FooterRefreshing)
         }
     }
 
-    shouldStartHeaderRefreshing() {
-        log('shouldStartHeaderRefreshing')
+    shouldStartHeaderRefreshing = () => {
+        log('[RefreshListView]  shouldStartHeaderRefreshing')
 
         if (this.props.refreshState == RefreshState.HeaderRefreshing ||
             this.props.refreshState == RefreshState.FooterRefreshing) {
@@ -75,8 +77,8 @@ class RefreshListView extends PureComponent {
         return true
     }
 
-    shouldStartFooterRefreshing(): boolean {
-        log('shouldStartFooterRefreshing')
+    shouldStartFooterRefreshing = () => {
+        log('[RefreshListView]  shouldStartFooterRefreshing')
 
         let {refreshState, data} = this.props
         if (data.length == 0) {
@@ -87,19 +89,20 @@ class RefreshListView extends PureComponent {
     }
 
     render() {
+        log('[RefreshListView]  render')
+
         return (
             <FlatList
-                onEndReachedThreshold={0.3}
-                onEndReached={(info) => this.onEndReached(info)}
-                onRefresh={() => this.onHeaderRefresh()}
+                onEndReached={this.onEndReached}
+                onRefresh={this.onHeaderRefresh}
                 refreshing={this.props.refreshState == RefreshState.HeaderRefreshing}
-                ListFooterComponent={() => this.renderFooter()}
+                ListFooterComponent={this.renderFooter}
                 {...this.props}
             />
         )
     }
 
-    renderFooter() {
+    renderFooter = () => {
         let footer = null
 
         let footerContainerStyle = [styles.footerContainer, this.props.footerContainerStyle]
@@ -152,7 +155,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         height: 44,
-        width: Dimensions.get('window').width,
     },
     footerText: {
         fontSize: 14,
