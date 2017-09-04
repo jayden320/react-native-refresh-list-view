@@ -27,7 +27,7 @@ const footerNoMoreDataText = '已加载全部数据'
 type Props = {
     refreshState: number,
     onHeaderRefresh: (refreshState: number) => void,
-    onFooterRefresh: (refreshState: number) => void,
+    onFooterRefresh?: (refreshState: number) => void,
     data: Array<any>,
 
     footerContainerStyle?: any,
@@ -62,7 +62,7 @@ class RefreshListView extends PureComponent {
 
         if (this.shouldStartFooterRefreshing()) {
             log('[RefreshListView]  onFooterRefresh')
-            this.props.onFooterRefresh(RefreshState.FooterRefreshing)
+            this.props.onFooterRefresh && this.props.onFooterRefresh(RefreshState.FooterRefreshing)
         }
     }
 
@@ -116,7 +116,7 @@ class RefreshListView extends PureComponent {
                     <TouchableOpacity
                         style={footerContainerStyle}
                         onPress={() => {
-                            this.props.onFooterRefresh(RefreshState.FooterRefreshing)
+                            this.props.onFooterRefresh && this.props.onFooterRefresh(RefreshState.FooterRefreshing)
                         }}
                     >
                         <Text style={footerTextStyle}>{footerFailureText}</Text>
