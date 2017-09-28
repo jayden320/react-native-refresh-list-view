@@ -32,6 +32,8 @@ type Props = {
 
     footerContainerStyle?: any,
     footerTextStyle?: any,
+    
+    listRef?: any,
 }
 
 type State = {}
@@ -93,6 +95,7 @@ class RefreshListView extends PureComponent {
 
         return (
             <FlatList
+                ref={this.props.listRef}
                 onEndReached={this.onEndReached}
                 onRefresh={this.onHeaderRefresh}
                 refreshing={this.props.refreshState == RefreshState.HeaderRefreshing}
