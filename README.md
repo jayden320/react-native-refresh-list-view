@@ -87,9 +87,9 @@ this.setState({refreshState: RefreshState.NoMoreData})
 
 | Prop | Type | Description | Default |
 | :- | :- | :- | :- |
-| refreshState | number | 列表刷新状态：<br/>1、Idle（普通状态）<br/>2、HeaderRefreshing（顶部加载中、正在刷新）<br/>3、FooterRefreshing（正在翻页）<br/>4、NoMoreData（已加载全部数据）5、Failure（加载失败） | None |
-| onHeaderRefresh | (refreshState: number) => void | 下拉刷新回调方法，回调方法中的refreshState参数固定为RefreshState.HeaderRefreshing | None |
-| onFooterRefresh | (refreshState: number) => void | 上拉翻页回调方法，回调方法中的refreshState参数固定为RefreshState.FooterRefreshing | None |
+| refreshState | number | 列表刷新状态：<br/>1、Idle（普通状态）<br/>2、HeaderRefreshing（头部菊花转圈圈中）<br/>3、FooterRefreshing（底部菊花转圈圈中）<br/>4、NoMoreData（已加载全部数据）<br/>5、Failure（加载失败） | None |
+| onHeaderRefresh | (refreshState: number) => void | 下拉刷新回调方法<br/>refreshState参数值为RefreshState.HeaderRefreshing | None |
+| onFooterRefresh | (refreshState: number) => void | 上拉翻页回调方法<br/>refreshState参数值为RefreshState.FooterRefreshing | None |
 | data | Array | 同FlatList中的data属性 | None |
 | footerContainerStyle | ?Object | 自定义底部容器样式 | None |
 | footerTextStyle | ?Object | 自定义底部文字样式 | None |
