@@ -20,10 +20,6 @@ export const RefreshState = {
 const DEBUG = false
 const log = (text: string) => {DEBUG && console.log(text)}
 
-const footerRefreshingText = '数据加载中…'
-const footerFailureText = '点击重新加载'
-const footerNoMoreDataText = '已加载全部数据'
-
 type Props = {
     refreshState: number,
     onHeaderRefresh: (refreshState: number) => void,
@@ -34,13 +30,20 @@ type Props = {
     footerTextStyle?: any,
 
     listRef?: any,
-}
 
-type State = {}
+    footerRefreshingText?: string,
+    footerFailureText?: string,
+    footerNoMoreDataText?: string,
+}
 
 class RefreshListView extends PureComponent {
     props: Props
-    state: State
+
+    static defaultProps = {
+        footerRefreshingText: '数据加载中…',
+        footerFailureText: '点击重新加载',
+        footerNoMoreDataText: '已加载全部数据',
+    }
 
     componentWillReceiveProps(nextProps: Props) {
         log('[RefreshListView]  RefreshListView componentWillReceiveProps ' + nextProps.refreshState)
@@ -111,6 +114,7 @@ class RefreshListView extends PureComponent {
 
         let footerContainerStyle = [styles.footerContainer, this.props.footerContainerStyle]
         let footerTextStyle = [styles.footerText, this.props.footerTextStyle]
+        let {footerRefreshingText, footerFailureText, footerNoMoreDataText} = this.props
 
         switch (this.props.refreshState) {
             case RefreshState.Idle:
