@@ -41,9 +41,18 @@ npm install
 react-native run-ios
 ```
 
-## 接口
+## Example
 
 ``` javascript
+
+constructor(props) {
+    super(props)
+
+    this.state = {
+        refreshState: RefreshState.Idle,
+    }
+}
+
 render() {
     return (
         <RefreshListView
@@ -58,10 +67,10 @@ render() {
     )
 }
 
-// 下拉刷新
+// 开始下拉刷新
 this.setState({refreshState: RefreshState.HeaderRefreshing})
 
-// 上拉翻页
+// 开始上拉翻页
 this.setState({refreshState: RefreshState.FooterRefreshing})
 
 // 加载成功
@@ -73,6 +82,20 @@ this.setState({refreshState: RefreshState.Failure})
 // 加载全部数据
 this.setState({refreshState: RefreshState.NoMoreData})
 ```
+
+## Props
+
+| Prop | Type | Description | Default |
+| :- | :- | :- | :- |
+| refreshState | number | 列表刷新状态：<br/>1、Idle（普通状态）<br/>2、HeaderRefreshing（顶部加载中、正在刷新）<br/>3、FooterRefreshing（正在翻页）<br/>4、NoMoreData（已加载全部数据）5、Failure（加载失败） | None |
+| onHeaderRefresh | (refreshState: number) => void | 下拉刷新回调方法，回调方法中的refreshState参数固定为RefreshState.HeaderRefreshing | None |
+| onFooterRefresh | (refreshState: number) => void | 上拉翻页回调方法，回调方法中的refreshState参数固定为RefreshState.FooterRefreshing | None |
+| data | Array | 同FlatList中的data属性 | None |
+| footerContainerStyle | ?Object | 自定义底部容器样式 | None |
+| footerTextStyle | ?Object | 自定义底部文字样式 | None |
+| footerRefreshingText | ?string | 自定义底部刷新中文字 | '数据加载中…' |
+| footerFailureText | ?string | 自定义底部失败文字 | '点击重新加载' |
+| footerNoMoreDataText | ?string | 自定义底部已加载全部数据文字 | '已加载全部数据' |
 
 ## 常见问题
 列表滑动过程中，可能会出现警告
