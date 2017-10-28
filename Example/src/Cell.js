@@ -18,7 +18,7 @@ const color = {
 class Cell extends PureComponent {
 
     render() {
-        console.log('render cell really!!!!')
+        console.log('render cell')
         let {info} = this.props
 
         info.imageUrl = info.imageUrl.replace('w.h', '160.0')

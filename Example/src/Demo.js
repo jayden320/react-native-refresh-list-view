@@ -25,9 +25,6 @@ class Demo extends Component {
             dataList: [],
             refreshState: RefreshState.Idle,
         }
-
-        {(this: any).keyExtractor = this.keyExtractor.bind(this)}
-        {(this: any).renderCell = this.renderCell.bind(this)}
     }
 
     componentDidMount() {
@@ -76,7 +73,7 @@ class Demo extends Component {
         }, 2000)
     }
 
-    // 获取测试数据，不用在意这里的实现
+    // 获取测试数据
     getTestList(isReload: boolean): Array<Object> {
         let newList = testData.map((data) => {
             return {
@@ -86,22 +83,14 @@ class Demo extends Component {
                 price: data.price,
             }
         })
-        let dataList = isReload ? newList : [...this.state.dataList, ...newList]
-
-        for (let i = 0; i < dataList.length; i++) {
-            dataList[i].id = i
-        }
-
-        return dataList
+        return isReload ? newList : [...this.state.dataList, ...newList]
     }
 
     keyExtractor = (item: any, index: number) => {
-        return item.id
+        return index
     }
 
     renderCell = (info: Object) => {
-        console.log('render cell')
-
         return <Cell info={info.item} />
     }
 
