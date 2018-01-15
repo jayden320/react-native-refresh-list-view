@@ -7,7 +7,7 @@
 //  https://github.com/huanxsd/react-native-refresh-list-view
 
 import React, {PureComponent} from 'react'
-import {View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity} from 'react-native'
+import {View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity, ViewPropTypes} from 'react-native'
 
 export const RefreshState = {
     Idle: 0,
@@ -22,22 +22,27 @@ const log = (text: string) => {DEBUG && console.log(text)}
 
 type Props = {
     refreshState: number,
-    onHeaderRefresh: (refreshState: number) => void,
-    onFooterRefresh?: (refreshState: number) => void,
+    onHeaderRefresh: Function,
+    onFooterRefresh?: Function,
     data: Array<any>,
 
-    footerContainerStyle?: any,
-    footerTextStyle?: any,
+    footerContainerStyle?: ViewPropTypes.style,
+    footerTextStyle?: ViewPropTypes.style,
 
     listRef?: any,
 
     footerRefreshingText?: string,
     footerFailureText?: string,
     footerNoMoreDataText?: string,
+
+    renderItem: Function,
 }
 
-class RefreshListView extends PureComponent {
-    props: Props
+type State = {
+
+}
+
+class RefreshListView extends PureComponent<Props, State> {
 
     static defaultProps = {
         footerRefreshingText: '数据加载中…',
@@ -62,7 +67,7 @@ class RefreshListView extends PureComponent {
         }
     }
 
-    onEndReached = (info: any) => {
+    onEndReached = (info: {distanceFromEnd: number}) => {
         log('[RefreshListView]  onEndReached   ' + info.distanceFromEnd)
 
         if (this.shouldStartFooterRefreshing()) {
@@ -96,6 +101,8 @@ class RefreshListView extends PureComponent {
     render() {
         log('[RefreshListView]  render')
 
+        let {renderItem, ...rest} = this.props
+
         return (
             <FlatList
                 ref={this.props.listRef}
@@ -104,7 +111,10 @@ class RefreshListView extends PureComponent {
                 refreshing={this.props.refreshState == RefreshState.HeaderRefreshing}
                 ListFooterComponent={this.renderFooter}
                 onEndReachedThreshold={0.1}
-                {...this.props}
+
+                renderItem={renderItem}
+
+                {...rest}
             />
         )
     }
