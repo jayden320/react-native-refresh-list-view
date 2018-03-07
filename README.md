@@ -81,6 +81,9 @@ this.setState({refreshState: RefreshState.Failure})
 
 // 加载全部数据
 this.setState({refreshState: RefreshState.NoMoreData})
+
+// 服务器没有数据
+this.setState({refreshState: RefreshState.EmptyData})
 ```
 
 ## Props
@@ -96,6 +99,7 @@ this.setState({refreshState: RefreshState.NoMoreData})
 | footerRefreshingText | ?string | 自定义底部刷新中文字 | '数据加载中…' |
 | footerFailureText | ?string | 自定义底部失败文字 | '点击重新加载' |
 | footerNoMoreDataText | ?string | 自定义底部已加载全部数据文字 | '已加载全部数据' |
+| footerEmptyDataText | ?string | 自定义服务器没有数据文字 | '暂时没有相关数据' |
 
 ## 常见问题
 列表滑动过程中，可能会出现警告

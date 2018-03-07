@@ -15,6 +15,7 @@ export const RefreshState = {
     FooterRefreshing: 2,
     NoMoreData: 3,
     Failure: 4,
+    EmptyData: 5,
 }
 
 const DEBUG = false
@@ -34,6 +35,7 @@ type Props = {
     footerRefreshingText?: string,
     footerFailureText?: string,
     footerNoMoreDataText?: string,
+    footerEmptyDataText?: string,
 
     renderItem: Function,
 }
@@ -48,6 +50,7 @@ class RefreshListView extends PureComponent<Props, State> {
         footerRefreshingText: '数据加载中…',
         footerFailureText: '点击重新加载',
         footerNoMoreDataText: '已加载全部数据',
+        footerEmptyDataText: '暂时没有相关数据',
     }
 
     componentWillReceiveProps(nextProps: Props) {
@@ -124,7 +127,7 @@ class RefreshListView extends PureComponent<Props, State> {
 
         let footerContainerStyle = [styles.footerContainer, this.props.footerContainerStyle]
         let footerTextStyle = [styles.footerText, this.props.footerTextStyle]
-        let {footerRefreshingText, footerFailureText, footerNoMoreDataText} = this.props
+        let {footerRefreshingText, footerFailureText, footerNoMoreDataText, footerEmptyDataText} = this.props
 
         switch (this.props.refreshState) {
             case RefreshState.Idle:
@@ -139,6 +142,19 @@ class RefreshListView extends PureComponent<Props, State> {
                         }}
                     >
                         <Text style={footerTextStyle}>{footerFailureText}</Text>
+                    </TouchableOpacity>
+                )
+                break
+            }
+            case RefreshState.EmptyData: {
+                footer = (
+                    <TouchableOpacity
+                        style={footerContainerStyle}
+                        onPress={() => {
+                            this.props.onFooterRefresh && this.props.onFooterRefresh(RefreshState.FooterRefreshing)
+                        }}
+                    >
+                        <Text style={footerTextStyle}>{footerEmptyDataText}</Text>
                     </TouchableOpacity>
                 )
                 break
