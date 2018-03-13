@@ -1,6 +1,6 @@
 {
   "name": "react-native-refresh-list-view",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A list component that can be pulled up & down to refresh, based on FlatList",
   "main": "RefreshListView.js",
   "scripts": {
