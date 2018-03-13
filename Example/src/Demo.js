@@ -47,7 +47,7 @@ class Demo extends Component {
 
             this.setState({
                 dataList: dataList,
-                refreshState: RefreshState.Idle,
+                refreshState: dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
             })
         }, 2000)
     }
@@ -83,7 +83,7 @@ class Demo extends Component {
                 price: data.price,
             }
         })
-        return isReload ? newList : [...this.state.dataList, ...newList]
+        return isReload ? (Math.random() < 0.2 ? [] : newList) : [...this.state.dataList, ...newList]
     }
 
     keyExtractor = (item: any, index: number) => {
@@ -110,6 +110,7 @@ class Demo extends Component {
                     footerRefreshingText= '玩命加载中 >.<'
                     footerFailureText = '我擦嘞，居然失败了 =.=!'
                     footerNoMoreDataText= '-我是有底线的-'
+                    footerEmptyDataText= '-好像什么东西都没有-'
                 />
             </View>
         )
