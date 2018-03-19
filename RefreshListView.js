@@ -79,11 +79,32 @@ class RefreshListView extends PureComponent<Props, State> {
         }
     }
 
+
+    onScroll = ({nativeEvent}) => {
+        let previousOffsetY = 0;
+        if (this.nativeEvent) {
+            previousOffsetY = this.nativeEvent.contentOffset.y;
+        }
+        const offsetY = nativeEvent.contentOffset.y;
+
+          /**
+             * 判断为上拉并且滚动到底部
+             */
+            if ((offsetY - previousOffsetY) > 0 && offsetY >= (nativeEvent.contentSize.height + nativeEvent.contentInset.bottom - nativeEvent.layoutMeasurement
+                .height)) {
+            if (this.shouldStartFooterRefreshing()) {
+                this.props.onFooterRefresh && this.props.onFooterRefresh(RefreshState.FooterRefreshing);
+            }
+        }
+
+        this.nativeEvent = nativeEvent;
+    }
+
     shouldStartHeaderRefreshing = () => {
         log('[RefreshListView]  shouldStartHeaderRefreshing')
 
-        if (this.props.refreshState == RefreshState.HeaderRefreshing ||
-            this.props.refreshState == RefreshState.FooterRefreshing) {
+        if (this.props.refreshState === RefreshState.HeaderRefreshing ||
+            this.props.refreshState === RefreshState.FooterRefreshing) {
             return false
         }
 
@@ -94,29 +115,27 @@ class RefreshListView extends PureComponent<Props, State> {
         log('[RefreshListView]  shouldStartFooterRefreshing')
 
         let {refreshState, data} = this.props
-        if (data.length == 0) {
+        if (data.length === 0) {
             return false
         }
 
-        return (refreshState == RefreshState.Idle)
+        return (refreshState === RefreshState.Idle)
     }
 
     render() {
         log('[RefreshListView]  render')
-
+        this.nativeEvent = null;
+        this.isResponder = false;
         let {renderItem, ...rest} = this.props
 
         return (
             <FlatList
                 ref={this.props.listRef}
-                onEndReached={this.onEndReached}
+                onScroll={this.onScroll}
                 onRefresh={this.onHeaderRefresh}
-                refreshing={this.props.refreshState == RefreshState.HeaderRefreshing}
+                refreshing={this.props.refreshState === RefreshState.HeaderRefreshing}
                 ListFooterComponent={this.renderFooter}
-                onEndReachedThreshold={0.1}
-
                 renderItem={renderItem}
-
                 {...rest}
             />
         )
