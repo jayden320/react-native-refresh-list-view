@@ -87,18 +87,13 @@ class RefreshListView extends PureComponent<Props, State> {
         }
         const offsetY = nativeEvent.contentOffset.y;
 
-        /**
-         * 判断是否为用户拖拽
-         */
-        if (this.isResponder) {
-            /**
+          /**
              * 判断为上拉并且滚动到底部
              */
             if ((offsetY - previousOffsetY) > 0 && offsetY >= (nativeEvent.contentSize.height + nativeEvent.contentInset.bottom - nativeEvent.layoutMeasurement
-                    .height)) {
-                if (this.shouldStartFooterRefreshing()) {
-                    this.props.onFooterRefresh && this.props.onFooterRefresh(RefreshState.FooterRefreshing);
-                }
+                .height)) {
+            if (this.shouldStartFooterRefreshing()) {
+                this.props.onFooterRefresh && this.props.onFooterRefresh(RefreshState.FooterRefreshing);
             }
         }
 
@@ -137,15 +132,6 @@ class RefreshListView extends PureComponent<Props, State> {
             <FlatList
                 ref={this.props.listRef}
                 onScroll={this.onScroll}
-                onResponderGrant={() => {
-                    this.isResponder = true;
-                }}
-                onResponderRelease={() => {
-                    this.isResponder = false;
-                }}
-                onResponderTerminate={() => {
-                    this.isResponder = false;
-                }}
                 onRefresh={this.onHeaderRefresh}
                 refreshing={this.props.refreshState === RefreshState.HeaderRefreshing}
                 ListFooterComponent={this.renderFooter}
