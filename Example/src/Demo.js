@@ -32,7 +32,6 @@ class Demo extends Component {
   }
 
   onHeaderRefresh = () => {
-    alert("onHeaderRefresh")
     this.setState({ refreshState: RefreshState.HeaderRefreshing })
 
     // 模拟网络请求
@@ -54,7 +53,6 @@ class Demo extends Component {
   }
 
   onFooterRefresh = () => {
-    alert("onFooterRefresh")
     this.setState({ refreshState: RefreshState.FooterRefreshing })
 
     // 模拟网络请求
