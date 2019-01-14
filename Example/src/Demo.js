@@ -37,7 +37,7 @@ class Demo extends Component {
     // 模拟网络请求
     setTimeout(() => {
       // 模拟网络加载失败的情况
-      if (Math.random() < 0.3) {
+      if (Math.random() < 0.2) {
         this.setState({ refreshState: RefreshState.Failure })
         return
       }
@@ -87,7 +87,7 @@ class Demo extends Component {
   }
 
   keyExtractor = (item: any, index: number) => {
-    return index
+    return index.toString()
   }
 
   renderCell = (info: Object) => {

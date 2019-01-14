@@ -1,6 +1,8 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
+ *
+ * @format
  * @flow
  */
 
@@ -9,12 +11,12 @@ import { AppRegistry } from 'react-native';
 
 import Demo from './src/Demo'
 
-export default class RefreshListView extends Component {
-    render() {
-        return (
-            <Demo />
-        );
-    }
+export default class App extends Component {
+  render() {
+    return (
+      <Demo />
+    );
+  }
 }
 
-AppRegistry.registerComponent('RefreshListView', () => RefreshListView);
+AppRegistry.registerComponent('App', () => App);
