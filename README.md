@@ -91,8 +91,8 @@ this.setState({refreshState: RefreshState.EmptyData})
 | Prop | Type | Description | Default |
 | :- | :- | :- | :- |
 | refreshState | number | 列表刷新状态：<br/>1、Idle（普通状态）<br/>2、HeaderRefreshing（头部菊花转圈圈中）<br/>3、FooterRefreshing（底部菊花转圈圈中）<br/>4、NoMoreData（已加载全部数据）<br/>5、Failure（加载失败） | None |
-| onHeaderRefresh | (refreshState: number) => void | 下拉刷新回调方法<br/>refreshState参数值为RefreshState.HeaderRefreshing | None |
-| onFooterRefresh | (refreshState: number) => void | 上拉翻页回调方法<br/>refreshState参数值为RefreshState.FooterRefreshing | None |
+| onHeaderRefresh | ?(refreshState: number) => void | 下拉刷新回调方法<br/>refreshState参数值为RefreshState.HeaderRefreshing | null |
+| onFooterRefresh | ?(refreshState: number) => void | 上拉翻页回调方法<br/>refreshState参数值为RefreshState.FooterRefreshing | null |
 | data | Array | 同FlatList中的data属性 | None |
 | footerRefreshingText | ?string | 自定义底部刷新中文字 | '数据加载中…' |
 | footerFailureText | ?string | 自定义底部失败文字 | '点击重新加载' |

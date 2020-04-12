@@ -23,7 +23,7 @@ const log = (text: string) => {DEBUG && console.log(text)}
 
 type Props = {
   refreshState: number,
-  onHeaderRefresh: Function,
+  onHeaderRefresh?: Function,
   onFooterRefresh?: Function,
   data: Array<any>,
 
@@ -42,25 +42,13 @@ type Props = {
   renderItem: Function,
 }
 
-type State = {
-
-}
-
-class RefreshListView extends PureComponent<Props, State> {
+class RefreshListView extends PureComponent<Props> {
 
   static defaultProps = {
     footerRefreshingText: '数据加载中…',
     footerFailureText: '点击重新加载',
     footerNoMoreDataText: '已加载全部数据',
     footerEmptyDataText: '暂时没有相关数据',
-  }
-
-  componentWillReceiveProps(nextProps: Props) {
-    log('[RefreshListView]  RefreshListView componentWillReceiveProps ' + nextProps.refreshState)
-  }
-
-  componentDidUpdate(prevProps: Props, prevState: State) {
-    log('[RefreshListView]  RefreshListView componentDidUpdate ' + prevProps.refreshState)
   }
 
   onHeaderRefresh = () => {
@@ -105,14 +93,13 @@ class RefreshListView extends PureComponent<Props, State> {
 
   render() {
     log('[RefreshListView]  render  refreshState:' + this.props.refreshState)
-
-    let {renderItem, ...rest} = this.props
+    let {renderItem, onHeaderRefresh, ...rest} = this.props
 
     return (
       <FlatList
         ref={this.props.listRef}
         onEndReached={this.onEndReached}
-        onRefresh={this.onHeaderRefresh}
+        onRefresh={onHeaderRefresh ? this.onHeaderRefresh : null}
         refreshing={this.props.refreshState == RefreshState.HeaderRefreshing}
         ListFooterComponent={this.renderFooter}
         onEndReachedThreshold={0.1}
