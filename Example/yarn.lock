@@ -600,8 +600,8 @@ acorn-walk@^6.0.1:
   resolved "https://registry.npmjs.org/acorn-walk/-/acorn-walk-6.1.1.tgz#d363b66f5fac5f018ff9c3a1e7b6f8e310cc3913"
 
 acorn@^5.5.3:
-  version "5.7.3"
-  resolved "https://registry.npmjs.org/acorn/-/acorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.4.tgz#3e8d8a9947d0599a1796d10225d7432f4a4acf5e"
 
 acorn@^6.0.1:
   version "6.0.5"
@@ -3931,6 +3931,10 @@ react-devtools-core@^3.4.2:
 react-is@^16.6.3:
   version "16.7.0"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.7.0.tgz#c1bd21c64f1f1364c6f70695ec02d69392f41bfa"
+
+react-native-refresh-list-view@^1.0.1:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/react-native-refresh-list-view/-/react-native-refresh-list-view-1.0.10.tgz#4f801e8526f9028d4273f04283506f7a1eda8a0b"
 
 react-native@0.57.8:
   version "0.57.8"
