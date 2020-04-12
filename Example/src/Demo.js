@@ -7,7 +7,7 @@
 //  https://github.com/huanxsd/react-native-refresh-list-view
 
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, Platform } from 'react-native'
+import { View, StyleSheet, Text, Platform, SafeAreaView } from 'react-native'
 import RefreshListView, { RefreshState } from 'react-native-refresh-list-view'
 import Cell from './Cell'
 import testData from './data'
@@ -97,7 +97,7 @@ class Demo extends Component {
   render() {
     console.log('render scene')
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <RefreshListView
           data={this.state.dataList}
           keyExtractor={this.keyExtractor}
@@ -112,7 +112,7 @@ class Demo extends Component {
           footerNoMoreDataText='-我是有底线的-'
           footerEmptyDataText='-好像什么东西都没有-'
         />
-      </View>
+      </SafeAreaView>
     )
   }
 }
@@ -120,7 +120,6 @@ class Demo extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Platform.OS == 'ios' ? 20 : 0,
   },
   title: {
     fontSize: 18,
