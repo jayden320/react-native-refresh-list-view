@@ -97,6 +97,7 @@ class RefreshListView extends PureComponent<Props> {
 
     return (
       <FlatList
+        scrollIndicatorInsets={{ right: 1 }}
         ref={this.props.listRef}
         onEndReached={this.onEndReached}
         onRefresh={onHeaderRefresh ? this.onHeaderRefresh : null}
